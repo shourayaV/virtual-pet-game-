@@ -5,36 +5,36 @@ var feed,addFood;
 var foodObj;
 
 function preload(){
-sadDog=loadImage("Images/Dog.png");
-happyDog=loadImage("Images/happy dog.png");
+sadDog=loadImage("Dog.png");
+happyDog=loadImage("happy dog.png");
 }
 
 function setup() {
   database=firebase.database();
-  createCanvas(1000,400);
+  createCanvas(500,500);
 
-  foodObj = new Food();
+ // foodObj = new Food();
 
-  foodStock=database.ref('Food');
+  foodStock=database.ref('food');
   foodStock.on("value",readStock);
   
-  dog=createSprite(800,200,150,150);
+  dog=createSprite(250,200,150,150);
   dog.addImage(sadDog);
   dog.scale=0.15;
   
   feed=createButton("Feed the dog");
-  feed.position(700,95);
+  feed.position(350,95);
   feed.mousePressed(feedDog);
 
   addFood=createButton("Add Food");
-  addFood.position(800,95);
+  addFood.position(200,95);
   addFood.mousePressed(addFoods);
 
 }
 
 function draw() {
   background(46,139,87);
-  foodObj.display();
+ // foodObj.display();
 
   fedTime=database.ref('FeedTime');
   fedTime.on("value",function(data){
@@ -57,7 +57,7 @@ function draw() {
 //function to read food Stock
 function readStock(data){
   foodS=data.val();
-  foodObj.updateFoodStock(foodS);
+ // foodObj.updateFoodStock(foodS);
 }
 
 
@@ -65,9 +65,9 @@ function readStock(data){
 function feedDog(){
   dog.addImage(happyDog);
 
-  foodObj.updateFoodStock(foodObj.getFoodStock()-1);
+ // foodObj.updateFoodStock(foodObj.getFoodStock()-1);
   database.ref('/').update({
-    Food:foodObj.getFoodStock(),
+  //  Food:foodObj.getFoodStock(),
     FeedTime:hour()
   })
 }
